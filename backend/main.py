@@ -14,6 +14,13 @@ class User:
     def __eq__(self, other):
         return self.username == other.username
     
+    def get_dict(self):
+        return {
+            "username": self.username,
+            "coordinares": self.coordinates,
+            "events": self.events
+        }
+    
     
 
 class Event:
@@ -34,11 +41,11 @@ class Event:
             "id": self.id,
             "name": self.name,
             "location": self.coordinates,
-            "members": self.get_members()
+            "members": self.get_members_dict()
         }
 
-    def get_members(self):
-        return [ user for user in users if self.id in user.events]
+    def get_members_dict(self):
+        return [ user.get_dict() for user in users if self.id in user.events]
 
 
 events = dict() #key = id, value = event
