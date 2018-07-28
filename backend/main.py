@@ -98,3 +98,8 @@ def ep_fetch():
         output.append( events[ev_id].get_dict() )
         
     return json.dumps(output)
+
+
+if __name__ == '__main__':
+
+    app.run(host = "127.0.0.1", port = 8080, debug = False)
