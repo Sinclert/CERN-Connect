@@ -14,6 +14,8 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 
+var events;
+
 
 function loadEvents() {
 
@@ -25,8 +27,8 @@ function loadEvents() {
 		url: "http://localhost:8080/events/",
 		success: function(events) {
 
-			var events = JSON.parse(events);
-			events.forEach(function(event) {
+			var eventNames = JSON.parse(events);
+			eventNames.forEach(function(event) {
 				string += "<div class=\"item\"><div class=\"header\">" + event.name + "</div>" + event.time + "</div>";
 			})
 			document.getElementById("list").innerHTML = string
