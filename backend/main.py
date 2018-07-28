@@ -66,7 +66,7 @@ users = set()
 users.add(User("millissa",[46.232587,6.045946],[1,2]))
 users.add(User("filipe",[46.235088,6.047212],[1,3]))
 users.add(User("varsha",[46.237889, 6.036799],[3,2]))
-users.add(User("Sinclert",[46.237889, 6.036799],[1,4]))
+users.add(User("Sinclert",[46.233286, 6.052623],[1,4]))
 
 @app.route('/')
 def ep_hello():
