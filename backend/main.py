@@ -14,10 +14,13 @@ class User:
     def __eq__(self, other):
         return self.username == other.username
     
+    def __hash__(self):
+        return self.username.__hash__()
+    
     def get_dict(self):
         return {
             "username": self.username,
-            "coordinares": self.coordinates,
+            "coordinates": self.coordinates,
             "events": self.events
         }
     
@@ -50,6 +53,18 @@ class Event:
 
 events = dict() #key = id, value = event
 users = set()
+
+events = {
+    1 : Event(1,"lol",[1,2],datetime(2018,2,1)),
+    2 : Event(2,"openlab",[1,2],datetime(2018,2,1)) ,
+    3 : Event(3,"summerstudent",[1,2],datetime(2018,2,1)),
+    4 : Event(4,"zipline",[1,2],datetime(2018,3,1))
+    }#key = id, value = event
+
+users = set()
+users.add(User("millissa",[2,3],[1,2]))
+users.add(User("filip",[2,3],[1,3]))
+users.add(User("versha",[2,3],[3,2]))
 
 
 @app.route('/')
