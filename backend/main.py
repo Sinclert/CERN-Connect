@@ -10,7 +10,6 @@ class User:
         self.coordinates = coordinates #tuple
         self.events = event_ids
 
-    
     def __eq__(self, other):
         return self.username == other.username
     
@@ -23,8 +22,6 @@ class User:
             "coordinates": self.coordinates,
             "events": self.events
         }
-    
-    
 
 class Event:
     def __init__(self, id, name, coordinates, dt):
@@ -37,6 +34,7 @@ class Event:
         return {
             "id": self.id,
             "name": self.name,
+            "count":len(self.get_members())
         }
 
     def get_dict(self):

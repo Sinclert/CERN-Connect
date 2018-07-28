@@ -1,45 +1,89 @@
-var mymap = L.map('mapid').setView([46.2363, 6.0412], 16);
+var map = L.map('mapid', {
+    maxZoom: 18,
+    minZoom: 16,
+    maxBounds: [
+        //south west
+        [46.18, 6.1],
+        //north east
+        [46.3, 5.95]
+        ]
+}).setView([46.2363, 6.0412], 16);
 
-	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-		maxZoom: 18,
-		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-			'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-		id: 'mapbox.streets'
-	}).addTo(mymap);
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+}).addTo(map);
 
-	// ####################################################################
-	// Leaflet style get location:
-	mymap.locate({setView: false, maxZoom: 16}); // setView: true if we want to set the map to the user position
 
-	function onLocationFound(e) {
-		var radius = e.accuracy / 2;
-	
-		L.marker(e.latlng).addTo(mymap)
-			.bindPopup("You are within " + radius + " meters from this point").openPopup();
-	
-		L.circle(e.latlng, radius).addTo(mymap);
 
-		console.log(e.latlng)
-		//TODO send this to server
-		sendLocation(e)
-	}
-	
-	mymap.on('locationfound', onLocationFound);
+function loadEvents() {
 
-	// Not working
-	function sendLocation(location) {
-		var xhr = new XMLHttpRequest();
-		var url = "http://127.0.0.1:5000/";
-		xhr.open("POST", url, true);
-		xhr.setRequestHeader("Content-Type", "application/json");
-		xhr.onreadystatechange = function () {
-			if (xhr.readyState === 4 && xhr.status === 200) {
-				var json = JSON.parse(xhr.responseText);
-				console.log(json);
-			}
-		};
-		console.log(location.latlng);
-		var data = JSON.stringify({"username": "myusername", "coordinates": [location.latlng.lat, location.latlng.lng], "events": []  });
-		xhr.send(data);
-	}
+	var layer = $("#layer-list");
+
+	$.ajax({
+		type: "GET",
+		url: "/events/",
+		success: function(events) {
+
+			var events = JSON.parse(events);
+			events.forEach(function(event) {
+				layer.innerHTML += "<div class=\"item\">" + event.name + "</div>";
+			})
+		}
+	});
+}
+
+
+// ####################################################################
+
+// Not working
+function sendLocation(location) {
+	var xhr = new XMLHttpRequest();
+	var url = "http://127.0.0.1:5000/";
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-Type", "application/json");
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState === 4 && xhr.status === 200) {
+			var json = JSON.parse(xhr.responseText);
+			console.log(json);
+		}
+	};
+	console.log(location.latlng);
+	var data = JSON.stringify({"username": "myusername", "coordinates": [location.latlng.lat, location.latlng.lng], "events": []  });
+	xhr.send(data);
+}
+
+function onLocationFound(e) {
+	var radius = e.accuracy / 2;
+
+	L.marker(e.latlng).addTo(map)
+		.bindPopup("You are within " + radius + " meters from this point").openPopup();
+
+	L.circle(e.latlng, radius).addTo(map);
+
+	console.log(e.latlng)
+	//TODO send this to server
+	sendLocation(e)
+}
+
+// Not working
+function sendLocation(location) {
+	var xhr = new XMLHttpRequest();
+	var url = "http://127.0.0.1:5000/";
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-Type", "application/json");
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState === 4 && xhr.status === 200) {
+			var json = JSON.parse(xhr.responseText);
+			console.log(json);
+		}
+	};
+	console.log(location.latlng);
+	var data = JSON.stringify({"username": "myusername", "coordinates": [location.latlng.lat, location.latlng.lng], "events": []  });
+	xhr.send(data);
+}
+
+
+// Leaflet style get location:
+map.locate({setView: false, maxZoom: 16}); // setView: true if we want to set the map to the user position
+
+map.on('locationfound', onLocationFound);
