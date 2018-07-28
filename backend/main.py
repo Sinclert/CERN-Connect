@@ -9,6 +9,17 @@ import threading
 app = Flask(__name__)
 CORS(app)
 
+def ical_extract(text):
+    name = ""
+    time = ""
+    for line in text.splitlines():
+        if line.startswith("SUMMARY:"):
+            name = line[len("SUMMARY:"):]
+        if line.startswith("DTSTART;VALUE=DATE-TIME:"):
+            time = line[len("DTSTART;VALUE=DATE-TIME:"):]
+    return name, datetime.strptime(time, "%Y%m%dT%H%M%SZ")
+
+
 class User:
     def __init__(self, username, coordinates, event_ids):
         self.username = username
@@ -29,6 +40,7 @@ class User:
         }
 
 class Event:
+    new_id = 100
     def __init__(self, id, name, coordinates, dt):
         self.id = id
         self.name = name
@@ -54,6 +66,19 @@ class Event:
 
     def get_members_dict(self):
         return [ user.get_dict() for user in users if self.id in user.events]
+
+    @staticmethod
+    def from_ical_text(ical_text):
+        name, dt = ical_extract(ical_text)
+        id = Event.new_id
+        Event.new_id += 1
+        location = [0,0] #FIXME B500 coords
+
+        #Add event
+        events[id] = Event(id, name, location, dt)
+
+
+
 
 
 events = dict() #key = id, value = event
