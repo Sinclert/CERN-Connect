@@ -37,7 +37,7 @@ class Event:
             "id": self.id,
             "name": self.name,
             "count":len(self.get_members_dict()),
-            "datetime": self.datetime
+            "time": self.datetime.time()
         }
 
     def get_dict(self):
@@ -46,7 +46,7 @@ class Event:
             "name": self.name,
             "location": self.coordinates,
             "members": self.get_members_dict(),
-            "datetime": self.datetime
+            "time": self.datetime.time()
         }
 
     def get_members_dict(self):
@@ -57,10 +57,10 @@ events = dict() #key = id, value = event
 users = set()
 
 events = {
-    1 : Event(1,"lol",[[46.229602, 6.053840],[46.229984, 6.054055]],datetime(2018,2,1)),
-    2 : Event(2,"openlab",[[46.229984, 6.054055],[46.229984, 6.054055]],datetime(2018,2,1)) ,
-    3 : Event(3,"summerstudent",[[46.229984, 6.054055],[46.237599, 6.038118]],datetime(2018,2,1)),
-    4 : Event(4,"zipline",[[46.237948, 6.036273],[46.237889, 6.036799]],datetime(2018,3,1))
+    1 : Event(1,"lol",[[46.229602, 6.053840],[46.229984, 6.054055]],datetime(2018,2,1,12,0)),
+    2 : Event(2,"openlab",[[46.229984, 6.054055],[46.229984, 6.054055]],datetime(2018,2,1, 13)) ,
+    3 : Event(3,"summerstudent",[[46.229984, 6.054055],[46.237599, 6.038118]],datetime(2018,2,1, 14)),
+    4 : Event(4,"zipline",[[46.237948, 6.036273],[46.237889, 6.036799]],datetime(2018,3,1, 16))
     }#key = id, value = event
 
 users = set()
