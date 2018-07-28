@@ -78,6 +78,7 @@ def ep_upload():
 
     user = User(**input)
     users.add(user)
+    print(input)
 
     return "OK"  #request.data #echo
 
