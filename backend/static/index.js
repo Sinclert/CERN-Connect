@@ -16,6 +16,7 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 
 var eventNames = [];
 var selectedEvents = [];
+var selectedName = "";
 var colors = [
 	"#00FF00",
 	"#00FFFF",
@@ -117,19 +118,23 @@ function onClick(e) {
 
 // Not working
 function sendLocation(location) {
-	var xhr = new XMLHttpRequest();
-	var url = "http://127.0.0.1:5000/";
-	xhr.open("POST", url, true);
-	xhr.setRequestHeader("Content-Type", "application/json");
-	xhr.onreadystatechange = function () {
-		if (xhr.readyState === 4 && xhr.status === 200) {
-			var json = JSON.parse(xhr.responseText);
-			console.log(json);
-		}
-	};
-	console.log(location.latlng);
-	var data = JSON.stringify({"username": "myusername", "coordinates": [location.latlng.lat, location.latlng.lng], "events": []  });
-	xhr.send(data);
+
+	$.ajax({
+        type: "POST",
+        dataType: 'json',
+        url: "http://localhost:8080/upload/",
+        contentType: 'application/json',
+        data: JSON.stringify({"username": selectedName, "coordinates": [location.latlng.lat, location.latlng.lng], "event_ids": selectedEvents }),
+        success: function(response) {
+        	console.log("hello");
+			//var json = JSON.parse(response);
+			console.log(response);
+			
+		},
+		error: function(response) {
+        	console.log("hello2");
+		},
+    });
 }
 
 
@@ -144,6 +149,11 @@ function onLocationFound(e) {
 	console.log(e.latlng)
 	//TODO send this to server
 	sendLocation(e)
+}
+
+
+function saveName() {
+	selectedName = $("#nameField").val();
 }
 
 
