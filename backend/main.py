@@ -1,8 +1,10 @@
 from flask import Flask, request
+from flask_cors import CORS
 from datetime import datetime
 import json
 
 app = Flask(__name__)
+CORS(app)
 
 class User:
     def __init__(self, username, coordinates, event_ids):
@@ -102,4 +104,4 @@ def ep_fetch():
 
 if __name__ == '__main__':
 
-    app.run(host = "127.0.0.1", port = 8080, debug = False)
+    app.run(host = "127.0.0.1", port = 8080, debug = True)
