@@ -44,7 +44,8 @@ class Event:
             "id": self.id,
             "name": self.name,
             "location": self.coordinates,
-            "members": self.get_members_dict()
+            "members": self.get_members_dict(),
+            "datetime": self.datetime
         }
 
     def get_members_dict(self):
@@ -55,17 +56,17 @@ events = dict() #key = id, value = event
 users = set()
 
 events = {
-    1 : Event(1,"lol",[1,2],datetime(2018,2,1)),
-    2 : Event(2,"openlab",[1,2],datetime(2018,2,1)) ,
-    3 : Event(3,"summerstudent",[1,2],datetime(2018,2,1)),
-    4 : Event(4,"zipline",[1,2],datetime(2018,3,1))
+    1 : Event(1,"lol",[[46.229602, 6.053840],[46.229984, 6.054055]],datetime(2018,2,1)),
+    2 : Event(2,"openlab",[[46.229984, 6.054055],[46.229984, 6.054055]],datetime(2018,2,1)) ,
+    3 : Event(3,"summerstudent",[[46.229984, 6.054055],[46.237599, 6.038118]],datetime(2018,2,1)),
+    4 : Event(4,"zipline",[[46.237948, 6.036273],[46.237889, 6.036799]],datetime(2018,3,1))
     }#key = id, value = event
 
 users = set()
-users.add(User("millissa",[2,3],[1,2]))
-users.add(User("filip",[2,3],[1,3]))
-users.add(User("versha",[2,3],[3,2]))
-
+users.add(User("millissa",[46.232587,6.045946],[1,2]))
+users.add(User("filipe",[46.235088,6.047212],[1,3]))
+users.add(User("varsha",[46.237889, 6.036799],[3,2]))
+users.add(User("Sinclert",[46.233286, 6.052623],[1,4]))
 
 @app.route('/')
 def ep_hello():
@@ -89,20 +90,19 @@ def ep_events():
     for event in events.values():
         output.append(event.get_simple_dict())
 
-    return json.dumps(output)
+    return json.dumps(output, indent=4, sort_keys=True, default=str)
 
 
-@app.route('/fetch/', methods=['POST'])
+@app.route('/fetch/', methods=['GET'])
 def ep_fetch():
-    input = json.loads(request.data)
+    #input = json.loads(request.data)
 
     output = []
-    for ev_id in input:
-        output.append( events[ev_id].get_dict() )
+    for ev in events.values():
+        output.append( ev.get_dict() )
         
-    return json.dumps(output)
+    return json.dumps(output, indent=4, sort_keys=True, default=str)
 
 
 if __name__ == '__main__':
-
     app.run(host = "127.0.0.1", port = 8080, debug = True)

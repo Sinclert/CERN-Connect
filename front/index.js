@@ -35,6 +35,57 @@ function loadEvents() {
 
 }
 
+function fetchEvents() {
+
+	$.ajax({
+		type: "GET",
+		url: "http://localhost:8080/fetch/",
+		success: function(events) {
+			clearMap();
+			events = JSON.parse(events);
+			paintBuilding(events[0].location);
+			paintMembers(events[0].members);
+		}
+	});
+}
+
+
+/** Clears the map from circles and popups */
+function clearMap() {
+
+    for (i in map._layers) {
+
+        if (map._layers[i]._path != undefined || map._layers[i]._icon != undefined) {
+            try {
+                map.removeLayer(map._layers[i]);
+            }
+            catch(e) {
+                console.log("problem with " + e + map._layers[i]);
+            }
+        }
+    }
+}
+
+
+function paintBuilding(coordinates) {
+	L.rectangle(coordinates, {color: "#3388ff", weight: 100}).addTo(map);
+}
+
+
+function paintMembers(members) {
+
+	members.forEach( function(element, index) {
+		L.circleMarker(element.coordinates, {color: '#3388ff', title: element.username}).addTo(map).on('click', function(e) {
+			onClick(e);
+		});
+	});
+}
+
+function onClick(e) {
+	alert(e.target.options.title);
+}
+
+
 
 // ####################################################################
 
@@ -75,3 +126,4 @@ map.locate({setView: false, maxZoom: 16}); // setView: true if we want to set th
 map.on('locationfound', onLocationFound);
 
 loadEvents();
+var fetchInterval = setInterval(fetchEvents, 3000);
