@@ -41,6 +41,7 @@ function fetchEvents() {
 		type: "GET",
 		url: "http://localhost:8080/fetch/",
 		success: function(events) {
+			clearMap();
 			events = JSON.parse(events);
 			paintBuilding(events[0].location);
 			paintMembers(events[0].members);
@@ -48,13 +49,29 @@ function fetchEvents() {
 	});
 }
 
-/** Function that paints all the battle data in the map */
+
+/** Clears the map from circles and popups */
+function clearMap() {
+
+    for (i in map._layers) {
+
+        if (map._layers[i]._path != undefined || map._layers[i]._icon != undefined) {
+            try {
+                map.removeLayer(map._layers[i]);
+            }
+            catch(e) {
+                console.log("problem with " + e + map._layers[i]);
+            }
+        }
+    }
+}
+
+
 function paintBuilding(coordinates) {
-	console.log(coordinates);
 	L.rectangle(coordinates, {color: "#3388ff", weight: 100}).addTo(map);
 }
 
-/** Function that paints all the battle data in the map */
+
 function paintMembers(members) {
 
 	members.forEach( function(element, index) {
@@ -109,4 +126,4 @@ map.locate({setView: false, maxZoom: 16}); // setView: true if we want to set th
 map.on('locationfound', onLocationFound);
 
 loadEvents();
-fetchEvents();
+var fetchInterval = setInterval(fetchEvents, 3000);
