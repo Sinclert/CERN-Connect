@@ -138,6 +138,32 @@ function onLocationFound(e) {
 	sendLocation(e)
 }
 
+$("#submitData").on("click", function(e) {
+    console.log(e);
+    // e.preventDefault();
+    var formData = new FormData(e);
+    console.log(formData);
+    var obj = {};
+    obj['event_ids'] = JSON.stringify(formData);
+    obj['username'] = "Batman" ;
+    obj['coordinates'] = [1,2];
+    $.ajax({
+        type: "POST",
+        dataType: 'json',
+        url: "http://localhost:8080/upload/",
+        contentType: 'application/json',
+        data: JSON.stringify(obj),
+        success: function(data){
+            console.log("DATA POSTED SUCCESSFULLY"+data);
+        },
+        // data: {
+        //     "username": "my_username",
+        //     "coordinates": [1,2],
+        //     "event_ids": [1]
+        // },
+    });
+});
+
 
 // Leaflet style get location:
 map.locate({setView: false, maxZoom: 16}); // setView: true if we want to set the map to the user position
