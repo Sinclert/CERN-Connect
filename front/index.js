@@ -15,6 +15,13 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 
 
 var events;
+var colors = [
+	"#00FF00",
+	"#00FFFF",
+	"#000080",
+	"#800080",
+	"#FFFF00",
+]
 
 
 function loadEvents() {
@@ -45,8 +52,11 @@ function fetchEvents() {
 		success: function(events) {
 			clearMap();
 			events = JSON.parse(events);
-			paintBuilding(events[0].location);
-			paintMembers(events[0].members);
+			events.forEach( function(element, index) {
+				paintBuilding(element.location, colors[index]);
+				paintMembers(element.members, colors[index]);
+			});
+			
 		}
 	});
 }
@@ -69,15 +79,15 @@ function clearMap() {
 }
 
 
-function paintBuilding(coordinates) {
-	L.rectangle(coordinates, {color: "#3388ff", weight: 10}).addTo(map);
+function paintBuilding(coordinates, color) {
+	L.rectangle(coordinates, {color: color, weight: 10}).addTo(map);
 }
 
 
-function paintMembers(members) {
+function paintMembers(members, color) {
 
 	members.forEach( function(element, index) {
-		L.circleMarker(element.coordinates, {color: '#3388ff', title: element.username}).addTo(map).on('click', function(e) {
+		L.circleMarker(element.coordinates, {color: color, title: element.username}).addTo(map).on('click', function(e) {
 			onClick(e);
 		});
 	});
