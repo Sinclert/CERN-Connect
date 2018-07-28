@@ -36,7 +36,8 @@ class Event:
         return {
             "id": self.id,
             "name": self.name,
-            "count":len(self.get_members_dict())
+            "count":len(self.get_members_dict()),
+            "datetime": self.datetime
         }
 
     def get_dict(self):
