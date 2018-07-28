@@ -1,0 +1,18 @@
+html, body, #mapid {
+	padding: 0;
+	margin: 0;
+	height: 100%;
+	width: 100%;
+}
+
+
+#layer-panel {
+    font-family: 'Lato', sans-serif;
+    position: absolute;
+    top: 24px;
+    right: 14px;
+    padding: 22px;
+    background: #222;
+    z-index: 1000;
+    color: #faebd7;
+}
