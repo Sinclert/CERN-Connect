@@ -15,6 +15,7 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 
 
 var eventNames = [];
+var selectedEvents = [];
 var colors = [
 	"#00FF00",
 	"#00FFFF",
@@ -37,8 +38,8 @@ function loadEvents() {
 			var events = JSON.parse(events);
 			events.forEach(function(event) {
 				string += "<div class=\"item\">"
-				+ "<div class=\"header\"><input type=\"checkbox\" name=\"" + event.name
-				+ " value=\"" + event.name + "\" />&nbsp&nbsp&nbsp"
+				+ "<div class=\"header\"><input type=\"checkbox\" name=\"" + event.name + "\""
+				+ " value=\"" + event.id + "\" onchange=\"saveSelection(this)\"/>&nbsp&nbsp&nbsp"
 				+ event.name + "</div>"
 				+ event.time + "</div>";
 			})
@@ -55,7 +56,7 @@ function fetchEvents() {
         dataType: 'json',
         url: "http://localhost:8080/fetch/",
         contentType: 'application/json',
-        data: JSON.stringify([1,2]),
+        data: JSON.stringify(selectedEvents),
         success: function(events) {
 			clearMap();
 			eventNames = [];
@@ -131,6 +132,7 @@ function sendLocation(location) {
 	xhr.send(data);
 }
 
+
 function onLocationFound(e) {
 	var radius = e.accuracy / 2;
 
@@ -144,32 +146,17 @@ function onLocationFound(e) {
 	sendLocation(e)
 }
 
-$("#submitData").on("click", function(e) {
-    console.log(e);
-    // e.preventDefault();
-    var formData = new FormData(e);
-    console.log(formData);
-    var obj = {};
-    obj['event_ids'] = JSON.stringify(formData);
-    obj['username'] = "Batman" ;
-    obj['coordinates'] = [1,2];
-    $.ajax({
-        type: "POST",
-        dataType: 'json',
-        url: "http://localhost:8080/upload/",
-        contentType: 'application/json',
-        data: JSON.stringify(obj),
-        success: function(data){
-            console.log("DATA POSTED SUCCESSFULLY"+data);
-        },
-        // data: {
-        //     "username": "my_username",
-        //     "coordinates": [1,2],
-        //     "event_ids": [1]
-        // },
-    });
-});
 
+function saveSelection(e) {
+
+	if (selectedEvents.includes(e.value)) {
+		index = selectedEvents.indexOf(e.value);
+    	selectedEvents.splice(index, 1);
+	}
+	else {
+		selectedEvents.push(e.value);
+	}
+}
 
 // Leaflet style get location:
 map.locate({setView: false, maxZoom: 16}); // setView: true if we want to set the map to the user position
@@ -177,5 +164,5 @@ map.locate({setView: false, maxZoom: 16}); // setView: true if we want to set th
 map.on('locationfound', onLocationFound);
 
 loadEvents();
-var fetchInterval = setInterval(fetchEvents, 3000);
+var fetchInterval = setInterval(fetchEvents, 500);
 
