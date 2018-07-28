@@ -44,7 +44,8 @@ class Event:
             "id": self.id,
             "name": self.name,
             "location": self.coordinates,
-            "members": self.get_members_dict()
+            "members": self.get_members_dict(),
+            "datetime": self.datetime
         }
 
     def get_members_dict(self):
@@ -88,7 +89,7 @@ def ep_events():
     for event in events.values():
         output.append(event.get_simple_dict())
 
-    return json.dumps(output)
+    return json.dumps(output, indent=4, sort_keys=True, default=str)
 
 
 @app.route('/fetch/', methods=['POST'])
@@ -99,9 +100,8 @@ def ep_fetch():
     for ev_id in input:
         output.append( events[ev_id].get_dict() )
         
-    return json.dumps(output)
+    return json.dumps(output, indent=4, sort_keys=True, default=str)
 
 
 if __name__ == '__main__':
-
     app.run(host = "127.0.0.1", port = 8080, debug = True)
