@@ -15,15 +15,20 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 
+
 function loadEvents() {
 
-	// HTTP request to initiate the streaming process
+	var layer = $("#layer-list");
+
 	$.ajax({
-		type: "POST",
-		url: "/events",
+		type: "GET",
+		url: "/events/",
 		success: function(events) {
 
 			var events = JSON.parse(events);
+			events.forEach(function(event) {
+				layer.innerHTML += "<div class=\"item\">" + event.name + "</div>";
+			})
 		}
 	});
 }

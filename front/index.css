@@ -7,12 +7,10 @@ html, body, #mapid {
 
 
 #layer-panel {
-    font-family: 'Lato', sans-serif;
     position: absolute;
     top: 24px;
     right: 14px;
     padding: 22px;
-    background: #222;
+    background: #FFFFFF;
     z-index: 1000;
-    color: #faebd7;
 }
