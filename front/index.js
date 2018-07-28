@@ -41,9 +41,31 @@ function fetchEvents() {
 		type: "GET",
 		url: "http://localhost:8080/fetch/",
 		success: function(events) {
-			console.log(events);
+			events = JSON.parse(events);
+			paintBuilding(events[0].location);
+			paintMembers(events[0].members);
 		}
 	});
+}
+
+/** Function that paints all the battle data in the map */
+function paintBuilding(coordinates) {
+	console.log(coordinates);
+	L.rectangle(coordinates, {color: "#3388ff", weight: 100}).addTo(map);
+}
+
+/** Function that paints all the battle data in the map */
+function paintMembers(members) {
+
+	members.forEach( function(element, index) {
+		L.circleMarker(element.coordinates, {color: '#3388ff', title: element.username}).addTo(map).on('click', function(e) {
+			onClick(e);
+		});
+	});
+}
+
+function onClick(e) {
+	alert(e.target.options.title);
 }
 
 
