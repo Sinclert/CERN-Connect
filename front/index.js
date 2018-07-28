@@ -36,7 +36,11 @@ function loadEvents() {
 
 			var events = JSON.parse(events);
 			events.forEach(function(event) {
-				string += "<div class=\"item\"><div class=\"header\">" + event.name + "</div>" + event.time + "</div>";
+				string += "<div class=\"item\">"
+				+ "<div class=\"header\"><input type=\"checkbox\" name=\"" + event.name
+				+ " value=\"" + event.name + "\" />&nbsp&nbsp&nbsp"
+				+ event.name + "</div>"
+				+ event.time + "</div>";
 			})
 			document.getElementById("list").innerHTML = string
 		}
