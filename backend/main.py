@@ -4,6 +4,7 @@ from datetime import datetime
 import json
 from flask import send_from_directory
 import os
+import threading
 
 app = Flask(__name__)
 CORS(app)
@@ -74,10 +75,33 @@ events = {
  #key = id, value = event
 
 users = set()
-users.add(User("millissa",[46.232587,6.045946],[1,2]))
-users.add(User("filipe",[46.235088,6.047212],[1,3]))
-users.add(User("varsha",[46.237889, 6.036799],[3,2]))
-users.add(User("Sinclert",[46.233286, 6.052623],[1,4]))
+u1 = User("millissa",[46.232587,6.045946],[1,2])
+u2 = User("filipe",[46.235088,6.047212],[1,3])
+u3 = User("varsha",[46.237889, 6.036799],[3,2])
+u4 = User("Sinclert",[46.233286, 6.052623],[1,4])
+users.add(u1)
+users.add(u2)
+users.add(u3)
+users.add(u4)
+
+def move_users():
+    threading.Timer(3, move_users).start()
+    print(u4.coordinates)
+    if u1.coordinates[0] > 46.229984 and u1.coordinates[1] < 6.054055 :
+        u1.coordinates[0] -= 0.000185929 #0.0003718571
+        u1.coordinates[1] += 0.000579214 #0.0011584286
+    if u2.coordinates[0] > 46.229984 and u2.coordinates[1] < 6.054055 :
+        u2.coordinates[0] -= 0.0007291429
+        u2.coordinates[1] += 0.000977571
+    if u3.coordinates[0] > 46.229984 and u4.coordinates[1] < 6.054055 :
+        u3.coordinates[0] -= 0.001129286
+        u3.coordinates[1] +=0.002465143
+    if u4.coordinates[0] > 46.229984 and u4.coordinates[1] < 6.054055 :
+        u4.coordinates[0] -=0.000471714
+        u4.coordinates[1] +=0.000204571
+
+move_users()
+
 
 @app.route('/')
 def ep_hello():
