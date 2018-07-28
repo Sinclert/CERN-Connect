@@ -27,7 +27,7 @@ function loadEvents() {
 
 			var events = JSON.parse(events);
 			events.forEach(function(event) {
-				string += "<div class=\"item\">" + event.name + "</div>";
+				string += "<div class=\"item\"><div class=\"header\">" + event.name + "</div>" + event.time + "</div>";
 			})
 			document.getElementById("list").innerHTML = string
 		}
@@ -68,7 +68,7 @@ function clearMap() {
 
 
 function paintBuilding(coordinates) {
-	L.rectangle(coordinates, {color: "#3388ff", weight: 100}).addTo(map);
+	L.rectangle(coordinates, {color: "#3388ff", weight: 10}).addTo(map);
 }
 
 
