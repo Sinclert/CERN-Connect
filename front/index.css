@@ -8,9 +8,19 @@ html, body, #mapid {
 
 #layer-panel {
     position: absolute;
-    top: 24px;
+    top: 100px;
     right: 14px;
     padding: 22px;
     background: #FFFFFF;
+    z-index: 1000;
+}
+
+#nameInput {
+    position: absolute;
+    width: 250px;
+    top: 24px;
+    right: 15px;
+    padding: 22px;
+    background: transparent;
     z-index: 1000;
 }
