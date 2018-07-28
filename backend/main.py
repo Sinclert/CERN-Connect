@@ -56,17 +56,17 @@ events = dict() #key = id, value = event
 users = set()
 
 events = {
-    1 : Event(1,"lol",[46.231818,6.054647],datetime(2018,2,1)),
-    2 : Event(2,"openlab",[46.231978,6.045431],datetime(2018,2,1)) ,
-    3 : Event(3,"summerstudent",[46.231818,6.054647],datetime(2018,2,1)),
-    4 : Event(4,"zipline",[46.231978,6.045431],datetime(2018,3,1))
+    1 : Event(1,"lol",[[46.229602, 6.053840],[46.229984, 6.054055]],datetime(2018,2,1)),
+    2 : Event(2,"openlab",[[46.229984, 6.054055],[46.229984, 6.054055]],datetime(2018,2,1)) ,
+    3 : Event(3,"summerstudent",[[46.229984, 6.054055],[46.237599, 6.038118]],datetime(2018,2,1)),
+    4 : Event(4,"zipline",[[46.237948, 6.036273],[46.237889, 6.036799]],datetime(2018,3,1))
     }#key = id, value = event
 
 users = set()
 users.add(User("millissa",[46.232587,6.045946],[1,2]))
-users.add(User("filip",[46.235088,6.047212],[1,3]))
-users.add(User("versha",[46.235088,6.047212],[3,2]))
-
+users.add(User("filipe",[46.235088,6.047212],[1,3]))
+users.add(User("varsha",[46.237889, 6.036799],[3,2]))
+users.add(User("Sinclert",[46.237889, 6.036799],[1,4]))
 
 @app.route('/')
 def ep_hello():
