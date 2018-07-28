@@ -10,7 +10,6 @@ class User:
         self.coordinates = coordinates #tuple
         self.events = event_ids
 
-    
     def __eq__(self, other):
         return self.username == other.username
     
@@ -20,8 +19,6 @@ class User:
             "coordinares": self.coordinates,
             "events": self.events
         }
-    
-    
 
 class Event:
     def __init__(self, id, name, coordinates, dt):
@@ -34,6 +31,7 @@ class Event:
         return {
             "id": self.id,
             "name": self.name,
+            "count":len(self.get_members())
         }
 
     def get_dict(self):
@@ -50,7 +48,6 @@ class Event:
 
 events = dict() #key = id, value = event
 users = set()
-
 
 @app.route('/')
 def ep_hello():
