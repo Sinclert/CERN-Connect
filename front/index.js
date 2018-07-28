@@ -17,19 +17,22 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 
 function loadEvents() {
 
-	var layer = $("#layer-list");
+	var layer = $("#list");
+	var string = "";
 
 	$.ajax({
 		type: "GET",
-		url: "/events/",
+		url: "http://localhost:8080/events/",
 		success: function(events) {
 
 			var events = JSON.parse(events);
 			events.forEach(function(event) {
-				layer.innerHTML += "<div class=\"item\">" + event.name + "</div>";
+				string += "<div class=\"item\">" + event.name + "</div>";
 			})
+			document.getElementById("list").innerHTML = string
 		}
 	});
+
 }
 
 
@@ -65,25 +68,10 @@ function onLocationFound(e) {
 	sendLocation(e)
 }
 
-// Not working
-function sendLocation(location) {
-	var xhr = new XMLHttpRequest();
-	var url = "http://127.0.0.1:5000/";
-	xhr.open("POST", url, true);
-	xhr.setRequestHeader("Content-Type", "application/json");
-	xhr.onreadystatechange = function () {
-		if (xhr.readyState === 4 && xhr.status === 200) {
-			var json = JSON.parse(xhr.responseText);
-			console.log(json);
-		}
-	};
-	console.log(location.latlng);
-	var data = JSON.stringify({"username": "myusername", "coordinates": [location.latlng.lat, location.latlng.lng], "events": []  });
-	xhr.send(data);
-}
-
 
 // Leaflet style get location:
 map.locate({setView: false, maxZoom: 16}); // setView: true if we want to set the map to the user position
 
 map.on('locationfound', onLocationFound);
+
+loadEvents();
