@@ -56,16 +56,16 @@ events = dict() #key = id, value = event
 users = set()
 
 events = {
-    1 : Event(1,"lol",[1,2],datetime(2018,2,1)),
-    2 : Event(2,"openlab",[1,2],datetime(2018,2,1)) ,
-    3 : Event(3,"summerstudent",[1,2],datetime(2018,2,1)),
-    4 : Event(4,"zipline",[1,2],datetime(2018,3,1))
+    1 : Event(1,"lol",[46.231818,6.054647],datetime(2018,2,1)),
+    2 : Event(2,"openlab",[46.231978,6.045431],datetime(2018,2,1)) ,
+    3 : Event(3,"summerstudent",[46.231818,6.054647],datetime(2018,2,1)),
+    4 : Event(4,"zipline",[46.231978,6.045431],datetime(2018,3,1))
     }#key = id, value = event
 
 users = set()
-users.add(User("millissa",[2,3],[1,2]))
-users.add(User("filip",[2,3],[1,3]))
-users.add(User("versha",[2,3],[3,2]))
+users.add(User("millissa",[46.232587,6.045946],[1,2]))
+users.add(User("filip",[46.235088,6.047212],[1,3]))
+users.add(User("versha",[46.235088,6.047212],[3,2]))
 
 
 @app.route('/')
