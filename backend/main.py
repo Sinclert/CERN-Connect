@@ -92,13 +92,13 @@ def ep_events():
     return json.dumps(output, indent=4, sort_keys=True, default=str)
 
 
-@app.route('/fetch/', methods=['POST'])
+@app.route('/fetch/', methods=['GET'])
 def ep_fetch():
-    input = json.loads(request.data)
+    #input = json.loads(request.data)
 
     output = []
-    for ev_id in input:
-        output.append( events[ev_id].get_dict() )
+    for ev in events.values():
+        output.append( ev.get_dict() )
         
     return json.dumps(output, indent=4, sort_keys=True, default=str)
 

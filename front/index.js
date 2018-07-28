@@ -35,6 +35,18 @@ function loadEvents() {
 
 }
 
+function fetchEvents() {
+
+	$.ajax({
+		type: "GET",
+		url: "http://localhost:8080/fetch/",
+		success: function(events) {
+			console.log(events);
+		}
+	});
+}
+
+
 
 // ####################################################################
 
@@ -75,3 +87,4 @@ map.locate({setView: false, maxZoom: 16}); // setView: true if we want to set th
 map.on('locationfound', onLocationFound);
 
 loadEvents();
+fetchEvents();
