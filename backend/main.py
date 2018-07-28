@@ -2,6 +2,8 @@ from flask import Flask, request
 from flask_cors import CORS
 from datetime import datetime
 import json
+from flask import send_from_directory
+import os
 
 app = Flask(__name__)
 CORS(app)
@@ -109,6 +111,10 @@ def ep_fetch():
         
     return json.dumps(output, indent=4, sort_keys=True, default=str)
 
+@app.route('/<path:filename>')
+def serve_static(filename):
+    root_dir = os.path.dirname(os.getcwd())
+    return send_from_directory(os.path.join(root_dir, 'static', 'js'), filename)
 
 if __name__ == '__main__':
     app.run(host = "127.0.0.1", port = 8080, debug = True)
