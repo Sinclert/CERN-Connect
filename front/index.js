@@ -51,11 +51,13 @@ function loadEvents() {
 function fetchEvents() {
 
 	$.ajax({
-		type: "GET",
-		url: "http://localhost:8080/fetch/",
-		success: function(events) {
+        type: "POST",
+        dataType: 'json',
+        url: "http://localhost:8080/fetch/",
+        contentType: 'application/json',
+        data: JSON.stringify([1,2]),
+        success: function(events) {
 			clearMap();
-			var events = JSON.parse(events);
 			eventNames = [];
 			
 			events.forEach( function(element, index) {
@@ -68,8 +70,8 @@ function fetchEvents() {
 				source: eventNames
 			});
 			
-		}
-	});
+		},
+    });
 }
 
 

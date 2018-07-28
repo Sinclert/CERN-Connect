@@ -104,15 +104,18 @@ def ep_events():
     return json.dumps(output, indent=4, sort_keys=True, default=str)
 
 
-@app.route('/fetch/', methods=['GET'])
+@app.route('/fetch/', methods=['POST'])
 def ep_fetch():
-    #input = json.loads(request.data)
+    input = json.loads(request.data)
+
+    print(input)
 
     output = []
-    for ev in events.values():
-        output.append( ev.get_dict() )
-        
-    return json.dumps(output, indent=4, sort_keys=True, default=str)
+    for ev_id in input:
+        output.append( events[ev_id].get_dict() )
+    res = json.dumps(output, indent=4, sort_keys=True, default=str)
+    #print(res)
+    return res
 
 @app.route('/<path:filename>')
 def serve_static(filename):
