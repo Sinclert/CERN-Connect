@@ -14,7 +14,7 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 
-var events;
+var eventNames = [];
 var colors = [
 	"#00FF00",
 	"#00FFFF",
@@ -34,8 +34,8 @@ function loadEvents() {
 		url: "http://localhost:8080/events/",
 		success: function(events) {
 
-			var eventNames = JSON.parse(events);
-			eventNames.forEach(function(event) {
+			var events = JSON.parse(events);
+			events.forEach(function(event) {
 				string += "<div class=\"item\"><div class=\"header\">" + event.name + "</div>" + event.time + "</div>";
 			})
 			document.getElementById("list").innerHTML = string
@@ -51,10 +51,17 @@ function fetchEvents() {
 		url: "http://localhost:8080/fetch/",
 		success: function(events) {
 			clearMap();
-			events = JSON.parse(events);
+			var events = JSON.parse(events);
+			eventNames = [];
+			
 			events.forEach( function(element, index) {
+				eventNames.push({title: element.name})
 				paintBuilding(element.location, colors[index]);
 				paintMembers(element.members, colors[index]);
+			});
+
+			$('.ui.search').search({
+				source: eventNames
 			});
 			
 		}
@@ -139,3 +146,4 @@ map.on('locationfound', onLocationFound);
 
 loadEvents();
 var fetchInterval = setInterval(fetchEvents, 3000);
+
