@@ -42,18 +42,22 @@ class User:
 
 class Event:
     new_id = 100
-    def __init__(self, id, name, coordinates, dt):
+    def __init__(self, id, name, coordinates, dt, cName, cHex):
         self.id = id
         self.name = name
         self.coordinates = coordinates #tuple
         self.datetime = dt #datetime
+        self.colorName = cName
+        self.colorHex = cHex
     
     def get_simple_dict(self):
         return {
             "id": self.id,
             "name": self.name,
             "count":len(self.get_members_dict()),
-            "time": self.datetime.time()
+            "time": self.datetime.time(),
+            "colorName": self.colorName,
+            "colorHex": self.colorHex
         }
 
     def get_dict(self):
@@ -62,7 +66,9 @@ class Event:
             "name": self.name,
             "location": self.coordinates,
             "members": self.get_members_dict(),
-            "time": self.datetime.time()
+            "time": self.datetime.time(),
+            "colorName": self.colorName,
+            "colorHex": self.colorHex
         }
 
     def get_members_dict(self):
@@ -83,10 +89,10 @@ events = dict() #key = id, value = event
 users = set()
 
 events = {
-    "1" : Event(1,"lol",[[46.232072, 6.058441],[46.232130, 6.058508]],datetime(2018,2,1,12,0)),
-    "2" : Event(2,"openlab",[[46.229984, 6.054055],[46.229980, 6.054084]],datetime(2018,2,1, 13)) ,
-    "3" : Event(3,"summerstudent",[[46.231674, 6.054388],[46.231652, 6.054393]],datetime(2018,2,1, 14)),
-    "4" : Event(4,"zipline",[[46.237948, 6.036273],[46.237889, 6.036799]],datetime(2018,3,1, 16))
+    "1" : Event(1,"lol",[[46.232072, 6.058441],[46.232130, 6.058508]],datetime(2018,2,1,12,0), "red", "#FF0000"),
+    "2" : Event(2,"openlab",[[46.229984, 6.054055],[46.229980, 6.054084]],datetime(2018,2,1, 13), "blue", "#0000FF"),
+    "3" : Event(3,"summerstudent",[[46.231674, 6.054388],[46.231652, 6.054393]],datetime(2018,2,1, 14), "green", "#00FF00"),
+    "4" : Event(4,"zipline",[[46.237948, 6.036273],[46.237889, 6.036799]],datetime(2018,3,1, 16), "purple", "#800080")
     }
 """
     5 : Event(1,"lecture",[[46.229602, 6.053840],[46.229984, 6.054055]],datetime(2018,2,1,12,0)),
