@@ -5,6 +5,7 @@ import json
 from flask import send_from_directory
 import os
 import threading
+import urllib.request
 
 app = Flask(__name__)
 CORS(app)
@@ -77,10 +78,6 @@ class Event:
         #Add event
         events[id] = Event(id, name, location, dt)
 
-
-
-
-
 events = dict() #key = id, value = event
 users = set()
 
@@ -110,20 +107,20 @@ users.add(u3)
 users.add(u4)
 
 def move_users():
-    threading.Timer(3, move_users).start()
-    print(u4.coordinates)
+    threading.Timer(2, move_users).start()
+    print(u3.coordinates)
     if u1.coordinates[0] > 46.229984 and u1.coordinates[1] < 6.054055 :
         u1.coordinates[0] -= 0.000185929 #0.0003718571
         u1.coordinates[1] += 0.000579214 #0.0011584286
     if u2.coordinates[0] > 46.229984 and u2.coordinates[1] < 6.054055 :
         u2.coordinates[0] -= 0.0007291429
         u2.coordinates[1] += 0.000977571
-    if u3.coordinates[0] > 46.229984 and u4.coordinates[1] < 6.054055 :
-        u3.coordinates[0] -= 0.001129286
-        u3.coordinates[1] +=0.002465143
-    if u4.coordinates[0] > 46.229984 and u4.coordinates[1] < 6.054055 :
-        u4.coordinates[0] -=0.000471714
-        u4.coordinates[1] +=0.000204571
+    if u3.coordinates[0] > 46.232072 and u4.coordinates[1] < 6.058441 :
+        u3.coordinates[0] -= 0.000831
+        u3.coordinates[1] += 0.003091714
+    if u4.coordinates[0] >46.232072 and u4.coordinates[1] < 6.058441 :
+        u4.coordinates[0] -=0.000173429
+        u4.coordinates[1] +=0.000831143
 
 move_users()
 
@@ -157,14 +154,25 @@ def ep_events():
 def ep_fetch():
     input = json.loads(request.data)
 
-    print(input)
-
     output = []
     for ev_id in input:
         output.append( events[ev_id].get_dict() )
     res = json.dumps(output, indent=4, sort_keys=True, default=str)
     #print(res)
     return res
+
+@app.route('/indico_events/', methods=['POST'])
+def ep_indico():
+    #input = request.data
+    input = "https://indico.cern.ch/event/739481/"
+    input_ics = input[:23] + "export/" + input[23:-1] +".ics"
+    
+    req_ret = urllib.request.urlopen(input_ics)
+    data = req_ret.read()
+    text = data.decode('utf-8')
+
+    Event.from_ical_text(text)
+
 
 @app.route('/<path:filename>')
 def serve_static(filename):
