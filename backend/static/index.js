@@ -17,13 +17,6 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 var eventNames = [];
 var selectedEvents = [];
 var selectedName = "";
-var colors = [
-	"#00FF00",
-	"#00FFFF",
-	"#000080",
-	"#800080",
-	"#FFFF00",
-]
 
 
 function loadEvents() {
@@ -39,7 +32,7 @@ function loadEvents() {
 			var events = JSON.parse(events);
 			events.forEach(function(event) {
 				string += "<div class=\"item\">"
-				+ "<div class=\"header\"><input type=\"checkbox\" name=\"" + event.name + "\""
+				+ "<div class=\"ui " + event.colorName + " header\"><input type=\"checkbox\" name=\"" + event.name + "\""
 				+ " value=\"" + event.id + "\" onchange=\"saveSelection(this)\"/>&nbsp&nbsp&nbsp"
 				+ event.name + "</div>"
 				+ event.time + "</div>";
@@ -62,10 +55,10 @@ function fetchEvents() {
 			clearMap();
 			eventNames = [];
 			
-			events.forEach( function(element, index) {
-				eventNames.push({title: element.name})
-				paintBuilding(element.location, colors[index]);
-				paintMembers(element.members, colors[index]);
+			events.forEach(function(element) {
+				eventNames.push({title: element.name});
+				paintBuilding(element.location, element.colorHex);
+				paintMembers(element.members, element.colorHex);
 			});
 
 			$('.ui.search').search({
