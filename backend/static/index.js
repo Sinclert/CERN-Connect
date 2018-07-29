@@ -100,12 +100,19 @@ function loadEvents() {
 
 			var events = JSON.parse(events);
 			events.forEach(function(event) {
+
+				eventNames.push({title: event.name});
+
 				string += "<div class=\"item\">"
 				+ "<div class=\"ui " + event.colorName + " header\"><input type=\"checkbox\" name=\"" + event.name + "\""
 				+ " value=\"" + event.id + "\" onchange=\"saveSelection(this)\"/>&nbsp&nbsp&nbsp"
 				+ event.name + "</div>"
 				+ event.time + "</div>";
-			})
+			});
+
+			$('.ui.search').search({
+				source: eventNames
+			});
 			document.getElementById("list").innerHTML = string
 		}
 	});
@@ -122,16 +129,10 @@ function fetchEvents() {
         data: JSON.stringify(selectedEvents),
         success: function(events) {
 			clearMap();
-			eventNames = [];
-			
+
 			events.forEach(function(element) {
-				eventNames.push({title: element.name});
 				paintBuilding(element, icons[element.colorName]);
 				paintMembers(element.members, people_icon[element.colorName]);
-			});
-
-			$('.ui.search').search({
-				source: eventNames
 			});
 			
 		},
