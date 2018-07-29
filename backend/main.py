@@ -42,14 +42,16 @@ class User:
 
 class Event:
     new_id = 100
-    def __init__(self, id, name, coordinates, dt, cName, cHex):
+    url_ls = []
+    def __init__(self, id, name, coordinates, dt, cName, cHex, url = ""):
         self.id = id
         self.name = name
         self.coordinates = coordinates #tuple
         self.datetime = dt #datetime
         self.colorName = cName
         self.colorHex = cHex
-    
+        self.url = url
+
     def get_simple_dict(self):
         return {
             "id": self.id,
@@ -75,14 +77,29 @@ class Event:
         return [ user.get_dict() for user in users if self.id in user.events]
 
     @staticmethod
-    def from_ical_text(ical_text):
-        name, dt = ical_extract(ical_text)
+    def from_ical_text(indico_url):
+
+        for eve_url in Event.url_ls:
+            if indico_url in event_url[0]:
+                return event_url[1]
+
+        input_ics = indico_url[:23] + "export/" + indico_url[23:-1] +".ics"
+
+        req_ret = urllib.request.urlopen(input_ics)
+        data = req_ret.read()
+        text = data.decode('utf-8')
+
+        name, dt = ical_extract(text)
         id = Event.new_id
         Event.new_id += 1
         location = [0,0] #FIXME B500 coords
+        colour = "yellow"
+        colour_hex = "#FFFF00"
+
+        Event.url_ls.append([indico_url, id])
 
         #Add event
-        events[id] = Event(id, name, location, dt)
+        events[id] = Event(id, name, location, dt, colour, colour_hex, url)
         return id
 
 events = dict() #key = id, value = event
@@ -172,13 +189,8 @@ def ep_fetch():
 def ep_indico():
     input = (request.data).decode("utf-8")
     #input = "https://indico.cern.ch/event/739481/"
-    input_ics = input[:23] + "export/" + input[23:-1] +".ics"
 
-    req_ret = urllib.request.urlopen(input_ics)
-    data = req_ret.read()
-    text = data.decode('utf-8')
-
-    return str(Event.from_ical_text(text))
+    return str(Event.from_ical_text(input))
 
 @app.route('/<path:filename>')
 def serve_static(filename):
