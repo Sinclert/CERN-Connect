@@ -90,7 +90,7 @@ class Event:
         text = data.decode('utf-8')
 
         name, dt = ical_extract(text)
-        id = Event.new_id
+        id = str(Event.new_id)
         Event.new_id += 1
         location = [0,0] #FIXME B500 coords
         colour = "yellow"
@@ -106,10 +106,10 @@ events = dict() #key = id, value = event
 users = set()
 
 events = {
-    "1" : Event(1,"Physics lecture",[[46.232072, 6.058441],[46.232130, 6.058508]],datetime(2018,2,1,12,0), "red", "#FF0000"),
-    "2" : Event(2,"Openlab meet up",[[46.229984, 6.054055],[46.229980, 6.054084]],datetime(2018,2,1, 13), "blue", "#0000FF"),
-    "3" : Event(3,"Summerstudent",[[46.231674, 6.054388],[46.231652, 6.054393]],datetime(2018,2,1, 14), "green", "#00FF00"),
-    "4" : Event(4,"Zipline activity",[[46.237948, 6.036273],[46.237889, 6.036799]],datetime(2018,3,1, 16), "purple", "#800080")
+    "1" : Event("1","Physics lecture",[[46.232072, 6.058441],[46.232130, 6.058508]],datetime(2018,2,1,12,0), "red", "#FF0000"),
+    "2" : Event("2","Openlab meet up",[[46.229984, 6.054055],[46.229980, 6.054084]],datetime(2018,2,1, 13), "blue", "#0000FF"),
+    "3" : Event("3","Summerstudent",[[46.231674, 6.054388],[46.231652, 6.054393]],datetime(2018,2,1, 14), "green", "#00FF00"),
+    "4" : Event("4","Zipline activity",[[46.237948, 6.036273],[46.237889, 6.036799]],datetime(2018,3,1, 16), "purple", "#800080")
     }
 """
     5 : Event(1,"lecture",[[46.229602, 6.053840],[46.229984, 6.054055]],datetime(2018,2,1,12,0)),
