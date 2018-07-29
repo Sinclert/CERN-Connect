@@ -104,10 +104,10 @@ events = {
  #key = id, value = event
 
 users = set()
-u1 = User("millissa",[46.232587,6.045946],[1,2])
-u2 = User("filipe",[46.235088,6.047212],[1,3])
-u3 = User("varsha",[46.237889, 6.036799],[3,2])
-u4 = User("Sinclert",[46.233286, 6.052623],[1,4])
+u1 = User("millissa",[46.232587,6.045946], [2])
+u2 = User("filipe",[46.235088,6.047212], [2])
+u3 = User("varsha",[46.237889, 6.036799], [1])
+u4 = User("Sinclert",[46.233286, 6.052623], [1])
 users.add(u1)
 users.add(u2)
 users.add(u3)

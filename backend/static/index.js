@@ -18,6 +18,46 @@ var eventNames = [];
 var selectedEvents = [];
 var selectedName = "";
 
+// markers color
+var greenIcon = new L.Icon({
+  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+var redIcon = new L.Icon({
+  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+var blueIcon = new L.Icon({
+  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+var violetIcon = new L.Icon({
+  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
+var icons = {
+	"red": redIcon,
+	"blue": blueIcon,
+	"green": greenIcon,
+	"purple": violetIcon,
+}
 
 function loadEvents() {
 
@@ -57,7 +97,7 @@ function fetchEvents() {
 			
 			events.forEach(function(element) {
 				eventNames.push({title: element.name});
-				paintBuilding(element.location, element.colorHex);
+				paintBuilding(element.location, icons[element.colorName]);
 				paintMembers(element.members, element.colorHex);
 			});
 
@@ -87,8 +127,8 @@ function clearMap() {
 }
 
 
-function paintBuilding(coordinates, color) {
-	L.rectangle(coordinates, {color: color, weight: 10}).addTo(map);
+function paintBuilding(coordinates, icon) {
+	L.marker(coordinates[0], {icon: icon}).addTo(map);
 }
 
 
