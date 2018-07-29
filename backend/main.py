@@ -158,10 +158,14 @@ def ep_hello():
 def ep_upload():
     input = json.loads(request.data)
 
-    user = User(**input)
-    if user in users:
-        users.remove(user)
+    new_user = User(**input)
     users.add(user)
+
+    for user in users:
+        if user.username == new_user.username:
+            user.coordinates = new_user.coordinates
+            user.events = new_user.coordinates
+
     print(input)
 
     return jsonify({"res": "OK"}), 200  #request.data #echo
