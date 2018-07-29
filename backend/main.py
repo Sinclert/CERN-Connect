@@ -79,7 +79,7 @@ class Event:
     @staticmethod
     def from_ical_text(indico_url):
 
-        for eve_url in Event.url_ls:
+        for event_url in Event.url_ls:
             if indico_url in event_url[0]:
                 return event_url[1]
 
@@ -99,7 +99,7 @@ class Event:
         Event.url_ls.append([indico_url, id])
 
         #Add event
-        events[id] = Event(id, name, location, dt, colour, colour_hex, url)
+        events[id] = Event(id, name, location, dt, colour, colour_hex, indico_url)
         return id
 
 events = dict() #key = id, value = event
@@ -121,10 +121,10 @@ events = {
  #key = id, value = event
 
 users = set()
-u1 = User("millissa",[46.232587,6.045946], [2])
-u2 = User("filipe",[46.235088,6.047212], [2])
-u3 = User("varsha",[46.237889, 6.036799], [1])
-u4 = User("Sinclert",[46.233286, 6.052623], [1])
+u1 = User("millissa",[46.232587,6.045946], ["2"])
+u2 = User("filipe",[46.235088,6.047212], ["2"])
+u3 = User("varsha",[46.237889, 6.036799], ["1"])
+u4 = User("Sinclert",[46.233286, 6.052623], ["1"])
 users.add(u1)
 users.add(u2)
 users.add(u3)
