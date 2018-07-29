@@ -107,20 +107,20 @@ users.add(u3)
 users.add(u4)
 
 def move_users():
-    threading.Timer(3, move_users).start()
-    #print(u4.coordinates)
+    threading.Timer(2, move_users).start()
+    print(u3.coordinates)
     if u1.coordinates[0] > 46.229984 and u1.coordinates[1] < 6.054055 :
         u1.coordinates[0] -= 0.000185929 #0.0003718571
         u1.coordinates[1] += 0.000579214 #0.0011584286
     if u2.coordinates[0] > 46.229984 and u2.coordinates[1] < 6.054055 :
         u2.coordinates[0] -= 0.0007291429
         u2.coordinates[1] += 0.000977571
-    if u3.coordinates[0] > 46.229984 and u4.coordinates[1] < 6.054055 :
-        u3.coordinates[0] -= 0.001129286
-        u3.coordinates[1] +=0.002465143
-    if u4.coordinates[0] > 46.229984 and u4.coordinates[1] < 6.054055 :
-        u4.coordinates[0] -=0.000471714
-        u4.coordinates[1] +=0.000204571
+    if u3.coordinates[0] > 46.232072 and u4.coordinates[1] < 6.058441 :
+        u3.coordinates[0] -= 0.000831
+        u3.coordinates[1] += 0.003091714
+    if u4.coordinates[0] >46.232072 and u4.coordinates[1] < 6.058441 :
+        u4.coordinates[0] -=0.000173429
+        u4.coordinates[1] +=0.000831143
 
 move_users()
 
