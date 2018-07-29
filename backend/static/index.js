@@ -33,7 +33,7 @@ function loadEvents() {
 
 	$.ajax({
 		type: "GET",
-		url: "http://localhost:8080/events/",
+		url: "/events/",
 		success: function(events) {
 
 			var events = JSON.parse(events);
@@ -55,7 +55,7 @@ function fetchEvents() {
 	$.ajax({
         type: "POST",
         dataType: 'json',
-        url: "http://localhost:8080/fetch/",
+        url: "/fetch/",
         contentType: 'application/json',
         data: JSON.stringify(selectedEvents),
         success: function(events) {
@@ -122,7 +122,7 @@ function sendLocation(location) {
 	$.ajax({
         type: "POST",
         dataType: 'json',
-        url: "http://localhost:8080/upload/",
+        url: "/upload/",
         contentType: 'application/json',
         data: JSON.stringify({"username": selectedName, "coordinates": [location.latlng.lat, location.latlng.lng], "event_ids": selectedEvents }),
         success: function(response) {
