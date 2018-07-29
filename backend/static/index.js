@@ -225,6 +225,11 @@ function saveSelection(e) {
 	}
 }
 
+function upload_location() {
+	map.locate({setView: false, maxZoom: 16});
+	saveName() //sends location
+}
+
 // Leaflet style get location:
 map.locate({setView: false, maxZoom: 16}); // setView: true if we want to set the map to the user position
 
@@ -233,4 +238,4 @@ map.on('locationfound', onLocationFound);
 loadEvents();
 var fetchInterval = setInterval(fetchEvents, 500);
 var cleaningInterval = setInterval(function() { map.closePopup();}, 1500);
-
+var sendInterval = setInterval(upload_location, 3000);
