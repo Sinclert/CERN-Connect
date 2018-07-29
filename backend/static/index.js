@@ -194,10 +194,7 @@ function sendLocation(location) {
         contentType: 'application/json',
         data: JSON.stringify({"username": selectedName, "coordinates": [location.latlng.lat, location.latlng.lng], "event_ids": selectedEvents }),
         success: function(response) {
-        	console.log("hello");
-			//var json = JSON.parse(response);
 			console.log(response);
-			
 		},
 		error: function(response) {
         	console.log("hello2");
@@ -207,18 +204,7 @@ function sendLocation(location) {
 
 
 function onLocationFound(e) {
-
 	locloc = e;
-	var radius = e.accuracy / 2;
-
-	L.marker(e.latlng).addTo(map)
-		.bindPopup("You are within " + radius + " meters from this point").openPopup();
-
-	L.circle(e.latlng, radius).addTo(map);
-
-	console.log(e.latlng)
-	//TODO send this to server
-	sendLocation(e)
 }
 
 
