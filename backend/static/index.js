@@ -97,7 +97,7 @@ function fetchEvents() {
 			
 			events.forEach(function(element) {
 				eventNames.push({title: element.name});
-				paintBuilding(element.location, icons[element.colorName]);
+				paintBuilding(element, icons[element.colorName]);
 				paintMembers(element.members, element.colorHex);
 			});
 
@@ -127,8 +127,14 @@ function clearMap() {
 }
 
 
-function paintBuilding(coordinates, icon) {
-	L.marker(coordinates[0], {icon: icon}).addTo(map);
+function paintBuilding(info, icon) {
+	L.marker(info.location[0], {icon: icon}).addTo(map).on('click', function(e) {
+			//open popup;
+  			var popup = L.popup()
+   				.setLatLng(e.latlng) 
+   				.setContent(info.name)
+   				.openOn(map);
+		});;
 }
 
 
@@ -136,13 +142,13 @@ function paintMembers(members, color) {
 
 	members.forEach( function(element, index) {
 		L.circleMarker(element.coordinates, {color: color, title: element.username}).addTo(map).on('click', function(e) {
-			onClick(e);
+			//open popup;
+  			var popup = L.popup()
+   				.setLatLng(e.latlng) 
+   				.setContent(element.username)
+   				.openOn(map);
 		});
 	});
-}
-
-function onClick(e) {
-	alert(e.target.options.title);
 }
 
 
@@ -208,4 +214,5 @@ map.on('locationfound', onLocationFound);
 
 loadEvents();
 var fetchInterval = setInterval(fetchEvents, 500);
+var cleaningInterval = setInterval(function() { map.closePopup();}, 1500);
 
