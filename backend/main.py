@@ -159,6 +159,8 @@ def ep_upload():
     input = json.loads(request.data)
 
     user = User(**input)
+    if user in users:
+        users.remove(user)
     users.add(user)
     print(input)
 
