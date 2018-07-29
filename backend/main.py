@@ -92,7 +92,7 @@ class Event:
         name, dt = ical_extract(text)
         id = str(Event.new_id)
         Event.new_id += 1
-        location = [0,0] #FIXME B500 coords
+        location = [[46.232428, 6.054048],[46.232313, 6.054112]]
         colour = "yellow"
         colour_hex = "#FFFF00"
 
