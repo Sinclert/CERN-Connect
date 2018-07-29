@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS
+#from flask_cors import CORS
 from datetime import datetime
 import json
 from flask import send_from_directory
@@ -8,7 +8,7 @@ import threading
 import urllib.request
 
 app = Flask(__name__)
-CORS(app)
+#CORS(app)
 
 def ical_extract(text):
     name = ""
