@@ -77,6 +77,7 @@ class Event:
 
         #Add event
         events[id] = Event(id, name, location, dt)
+        return id
 
 events = dict() #key = id, value = event
 users = set()
@@ -163,16 +164,17 @@ def ep_fetch():
 
 @app.route('/indico_events/', methods=['POST'])
 def ep_indico():
-    #input = request.data
-    input = "https://indico.cern.ch/event/739481/"
+    input = request.data
+    #input = "https://indico.cern.ch/event/739481/"
     input_ics = input[:23] + "export/" + input[23:-1] +".ics"
     
     req_ret = urllib.request.urlopen(input_ics)
     data = req_ret.read()
     text = data.decode('utf-8')
 
-    Event.from_ical_text(text)
+    #print(Event.from_ical_text(text))
 
+    return Event.from_ical_text(text)
 
 @app.route('/<path:filename>')
 def serve_static(filename):
