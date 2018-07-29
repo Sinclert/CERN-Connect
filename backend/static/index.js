@@ -17,6 +17,7 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 var eventNames = [];
 var selectedEvents = [];
 var selectedName = "";
+var locloc;
 
 // markers color
 var greenIcon = new L.Icon({
@@ -59,6 +60,34 @@ var icons = {
 	"purple": violetIcon,
 }
 
+
+// people colors 
+L.Icon.Default.imagePath = './images';
+var blueM= new L.Icon({
+  iconUrl: './images/blue.png',
+  iconSize: [25, 25],
+});
+var redM= new L.Icon({
+  iconUrl: './images/red.png',
+  iconSize: [25, 25],
+});
+var greenM= new L.Icon({
+  iconUrl: './images/green.png',
+  iconSize: [25, 25],
+});
+var violetM= new L.Icon({
+  iconUrl: './images/purple.png',
+  iconSize: [25, 25],
+});
+
+var people_icon = {
+	"red": redM,
+	"blue": blueM,
+	"green": greenM,
+	"purple": violetM,
+}
+
+
 function loadEvents() {
 
 	var layer = $("#list");
@@ -98,7 +127,7 @@ function fetchEvents() {
 			events.forEach(function(element) {
 				eventNames.push({title: element.name});
 				paintBuilding(element, icons[element.colorName]);
-				paintMembers(element.members, element.colorHex);
+				paintMembers(element.members, people_icon[element.colorName]);
 			});
 
 			$('.ui.search').search({
@@ -138,10 +167,10 @@ function paintBuilding(info, icon) {
 }
 
 
-function paintMembers(members, color) {
+function paintMembers(members, icon) {
 
 	members.forEach( function(element, index) {
-		L.circleMarker(element.coordinates, {color: color, title: element.username}).addTo(map).on('click', function(e) {
+		L.marker(element.coordinates, {icon: icon, title: element.username}).addTo(map).on('click', function(e) {
 			//open popup;
   			var popup = L.popup()
    				.setLatLng(e.latlng) 
@@ -178,6 +207,8 @@ function sendLocation(location) {
 
 
 function onLocationFound(e) {
+
+	locloc = e;
 	var radius = e.accuracy / 2;
 
 	L.marker(e.latlng).addTo(map)
@@ -193,6 +224,7 @@ function onLocationFound(e) {
 
 function saveName() {
 	selectedName = $("#nameField").val();
+	sendLocation(locloc);
 }
 
 
