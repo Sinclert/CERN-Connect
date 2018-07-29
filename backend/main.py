@@ -193,7 +193,8 @@ def ep_fetch():
 
 @app.route('/indico_events/', methods=['POST'])
 def ep_indico():
-    input = (request.data).decode("utf-8")
+    input = json.loads(request.data)
+    print(input)
     #input = "https://indico.cern.ch/event/739481/"
 
     return str(Event.from_ical_text(input))

@@ -52,12 +52,20 @@ var violetIcon = new L.Icon({
   popupAnchor: [1, -34],
   shadowSize: [41, 41]
 });
-
+var yellowIcon = new L.Icon({
+  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-yellow.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
 var icons = {
-	"red": redIcon,
-	"blue": blueIcon,
-	"green": greenIcon,
-	"purple": violetIcon,
+  "red": redIcon,
+  "blue": blueIcon,
+  "green": greenIcon,
+  "purple": violetIcon,
+  "yellow" : yellowIcon,
 }
 
 
@@ -79,12 +87,16 @@ var violetM= new L.Icon({
   iconUrl: './images/purple.png',
   iconSize: [25, 25],
 });
-
+var yellowM= new L.Icon({
+  iconUrl: './images/yellow.png',
+  iconSize: [25, 25],
+});
 var people_icon = {
-	"red": redM,
-	"blue": blueM,
-	"green": greenM,
-	"purple": violetM,
+  "red": redM,
+  "blue": blueM,
+  "green": greenM,
+  "purple": violetM,
+  "yellow": yellowM,
 }
 
 
@@ -206,8 +218,26 @@ function sendLocation(location) {
 
 
 function addEvent() {
-	var url = prompt("Please enter your event url", "");
+  var url = prompt("Please enter your event url", "");
+  console.log(url);
+  $.ajax({
+        type: "POST",
+        dataType: 'json',
+        url: "/indico_events/",
+        contentType: 'application/json',
+        data: JSON.stringify(url),
+        success: function(response) {
+           //selectedEvents.push(String(response));
+           loadEvents() ;
+           console.log(selectedEvents); 
+    },
+    error: function(response) {
+          console.log("hello2");
+    },
+    });
+
 }
+
 
 
 function onLocationFound(e) {
