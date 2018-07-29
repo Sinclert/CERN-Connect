@@ -159,7 +159,7 @@ def ep_upload():
     input = json.loads(request.data)
 
     new_user = User(**input)
-    users.add(user)
+    users.add(new_user)
 
     for user in users:
         if user.username == new_user.username:
