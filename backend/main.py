@@ -170,17 +170,15 @@ def ep_fetch():
 
 @app.route('/indico_events/', methods=['POST'])
 def ep_indico():
-    input = request.data
+    input = (request.data).decode("utf-8")
     #input = "https://indico.cern.ch/event/739481/"
     input_ics = input[:23] + "export/" + input[23:-1] +".ics"
-    
+
     req_ret = urllib.request.urlopen(input_ics)
     data = req_ret.read()
     text = data.decode('utf-8')
 
-    #print(Event.from_ical_text(text))
-
-    return Event.from_ical_text(text)
+    return str(Event.from_ical_text(text))
 
 @app.route('/<path:filename>')
 def serve_static(filename):
