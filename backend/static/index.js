@@ -216,7 +216,7 @@ function onLocationFound(e) {
 
 function saveName() {
 	selectedName = $("#nameField").val();
-	sendLocation(locloc);
+	//sendLocation(locloc);
 }
 
 
@@ -232,12 +232,13 @@ function saveSelection(e) {
 }
 
 function upload_location() {
-	map.locate({setView: false, maxZoom: 16});
-	saveName() //sends location
+	//map.locate({setView: false, maxZoom: 16});
+	if (selectedName != "")
+		sendLocation(locloc);
 }
 
 // Leaflet style get location:
-map.locate({setView: false, maxZoom: 16}); // setView: true if we want to set the map to the user position
+map.locate({setView: false, maxZoom: 16, watch: true}); // setView: true if we want to set the map to the user position
 
 map.on('locationfound', onLocationFound);
 
