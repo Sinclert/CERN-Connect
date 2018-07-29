@@ -187,6 +187,7 @@ function paintMembers(members, icon) {
 
 // Not working
 function sendLocation(location) {
+	console.log({"username": selectedName, "coordinates": [location.latlng.lat, location.latlng.lng], "event_ids": selectedEvents })
 
 	$.ajax({
         type: "POST",
@@ -210,6 +211,7 @@ function addEvent() {
 
 
 function onLocationFound(e) {
+	console.log("NEW LOcATION");
 	locloc = e;
 }
 
@@ -238,7 +240,7 @@ function upload_location() {
 }
 
 // Leaflet style get location:
-map.locate({setView: false, maxZoom: 16, watch: true}); // setView: true if we want to set the map to the user position
+
 
 map.on('locationfound', onLocationFound);
 
@@ -246,3 +248,5 @@ loadEvents();
 var fetchInterval = setInterval(fetchEvents, 500);
 var cleaningInterval = setInterval(function() { map.closePopup();}, 1500);
 var sendInterval = setInterval(upload_location, 3000);
+
+map.locate({setView: false, maxZoom: 16, watch: true}); // setView: true if we want to set the map to the user position
