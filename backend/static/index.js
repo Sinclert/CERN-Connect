@@ -203,6 +203,11 @@ function sendLocation(location) {
 }
 
 
+function addEvent() {
+	var url = prompt("Please enter your event url", "");
+}
+
+
 function onLocationFound(e) {
 	locloc = e;
 }
