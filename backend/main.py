@@ -164,7 +164,7 @@ def ep_upload():
     for user in users:
         if user.username == new_user.username:
             user.coordinates = new_user.coordinates
-            user.events = new_user.coordinates
+            user.events = new_user.events
 
     print(input)
 
